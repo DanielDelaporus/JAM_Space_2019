@@ -1,0 +1,202 @@
+[gd_scene load_steps=16 format=2]
+
+[ext_resource path="res://Nodes/Interface/HUD/main_hud.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Nodes/Agents/Player.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Nodes/Asteroids/BigAsteroid_3.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Nodes/Asteroids/BigAsteroid_4.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Nodes/Asteroids/BigAsteroid_2.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Nodes/Spawns.gd" type="Script" id=6]
+[ext_resource path="res://Nodes/Agents/Station.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Nodes/Asteroids/BigAsteroid_1.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Nodes/ParallaxBackground.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Assets/Sounds/Bit Space (loopable).ogg" type="AudioStream" id=10]
+[ext_resource path="res://Nodes/Squads/FiveZero.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Nodes/Squads/Squadron1.tscn" type="PackedScene" id=12]
+[ext_resource path="res://Nodes/Interface/Menu/InGameMenu.tscn" type="PackedScene" id=14]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Control
+
+
+func _ready():
+	$HP_bar.value = 100
+
+
+func _on_Player_health_changed(health):
+	$HP_bar.value = health
+
+
+func _on_Player_shield_changed(shield):
+	$Sheild_bar.value = shield
+
+
+func _on_Spawns_wave_changed(wave):
+	$Wave_box/Label2.text = str(wave)
+
+
+func _on_Station_health_changed(health):
+	$TextureProgress.value = health
+"
+
+[sub_resource type="GDScript" id=2]
+script/source = "extends HTTPRequest
+
+
+func _on_HTTPRequest_request_completed(result, response_code, headers, body):
+	pass # Replace with function body.
+
+
+func _on_Station_end_game(wave):
+	end_game(wave)
+
+
+func _on_Player_end_game(wave):
+	end_game(wave)
+
+
+func end_game(wave):
+	pass
+#	connect(\"request_completed\", self, \"_on_request_completed\")
+#	var headers = [\"Content-Type: application/json\", \"Accept: application/json\"]
+#	request(\"http://localhost:3000/score/\" + str(wave), headers, false, 2, \"dsfdsfsfsdf\")
+"
+
+[node name="World" type="Node"]
+
+[node name="GUI" type="CanvasLayer" parent="."]
+
+[node name="HUD" parent="GUI" instance=ExtResource( 1 )]
+anchor_bottom = 0.0
+script = SubResource( 1 )
+
+[node name="Pause_menu" parent="GUI" instance=ExtResource( 14 )]
+pause_mode = 2
+margin_left = -250.0
+margin_top = -150.0
+margin_right = 250.0
+margin_bottom = 150.0
+size_flags_stretch_ratio = 0.0
+
+[node name="Background" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="ParallaxBackground" parent="Background" instance=ExtResource( 9 )]
+
+[node name="BigAsteroids" type="Node" parent="."]
+
+[node name="StaticAsteroid" parent="BigAsteroids" instance=ExtResource( 8 )]
+position = Vector2( -663.261, 875.088 )
+
+[node name="StaticAsteroid2" parent="BigAsteroids" instance=ExtResource( 5 )]
+position = Vector2( 1382.08, 809.109 )
+
+[node name="StaticAsteroid3" parent="BigAsteroids" instance=ExtResource( 3 )]
+position = Vector2( 1399.45, -996.628 )
+
+[node name="StaticAsteroid4" parent="BigAsteroids" instance=ExtResource( 4 )]
+position = Vector2( -1789.27, -1143.99 )
+
+[node name="StaticAsteroid8" parent="BigAsteroids" instance=ExtResource( 8 )]
+position = Vector2( -2799.46, 882.209 )
+
+[node name="StaticAsteroid7" parent="BigAsteroids" instance=ExtResource( 5 )]
+position = Vector2( 3591.24, 631.092 )
+
+[node name="StaticAsteroid6" parent="BigAsteroids" instance=ExtResource( 3 )]
+position = Vector2( 3094.16, -1900.95 )
+
+[node name="StaticAsteroid5" parent="BigAsteroids" instance=ExtResource( 4 )]
+position = Vector2( -194.236, -2005.59 )
+
+[node name="StaticAsteroid16" parent="BigAsteroids" instance=ExtResource( 8 )]
+position = Vector2( 2130.61, 2741.07 )
+
+[node name="StaticAsteroid15" parent="BigAsteroids" instance=ExtResource( 5 )]
+position = Vector2( 4175.95, 2675.09 )
+
+[node name="StaticAsteroid14" parent="BigAsteroids" instance=ExtResource( 3 )]
+position = Vector2( -4614.89, 2852.93 )
+
+[node name="StaticAsteroid13" parent="BigAsteroids" instance=ExtResource( 4 )]
+position = Vector2( -2407.71, 3607.19 )
+
+[node name="StaticAsteroid12" parent="BigAsteroids" instance=ExtResource( 8 )]
+position = Vector2( -5.5918, 2748.19 )
+
+[node name="StaticAsteroid11" parent="BigAsteroids" instance=ExtResource( 5 )]
+position = Vector2( -6954.56, -1738.45 )
+
+[node name="StaticAsteroid10" parent="BigAsteroids" instance=ExtResource( 3 )]
+position = Vector2( 5666.09, -811.761 )
+
+[node name="StaticAsteroid9" parent="BigAsteroids" instance=ExtResource( 4 )]
+position = Vector2( -5556.63, 595.557 )
+
+[node name="StaticAsteroid25" parent="BigAsteroids" instance=ExtResource( 4 )]
+position = Vector2( 3.84473, -4954.81 )
+
+[node name="StaticAsteroid24" parent="BigAsteroids" instance=ExtResource( 8 )]
+position = Vector2( 2394.72, -3685.58 )
+
+[node name="StaticAsteroid23" parent="BigAsteroids" instance=ExtResource( 5 )]
+position = Vector2( 5738.59, 1244.5 )
+
+[node name="StaticAsteroid22" parent="BigAsteroids" instance=ExtResource( 3 )]
+position = Vector2( -3866.58, -866.599 )
+
+[node name="StaticAsteroid21" parent="BigAsteroids" instance=ExtResource( 4 )]
+position = Vector2( -2209.63, -3765.84 )
+
+[node name="StaticAsteroid20" parent="BigAsteroids" instance=ExtResource( 8 )]
+position = Vector2( 7191.37, -2269.88 )
+
+[node name="StaticAsteroid19" parent="BigAsteroids" instance=ExtResource( 5 )]
+position = Vector2( -3917.31, -4599.63 )
+
+[node name="StaticAsteroid18" parent="BigAsteroids" instance=ExtResource( 3 )]
+position = Vector2( 5864.18, -3760.97 )
+
+[node name="StaticAsteroid17" parent="BigAsteroids" instance=ExtResource( 4 )]
+position = Vector2( -5116.45, -3035.94 )
+
+[node name="Player" parent="." instance=ExtResource( 2 )]
+
+[node name="Station" parent="." instance=ExtResource( 7 )]
+position = Vector2( -76.1123, -282.04 )
+
+[node name="Spawns" type="Node" parent="."]
+script = ExtResource( 6 )
+Squad1 = ExtResource( 11 )
+Squad2 = ExtResource( 12 )
+
+[node name="Spawn1" type="Node2D" parent="Spawns"]
+position = Vector2( 476.937, 1838.85 )
+
+[node name="Spawn2" type="Node2D" parent="Spawns"]
+position = Vector2( 3196.34, -235.899 )
+
+[node name="Spawn3" type="Node2D" parent="Spawns"]
+position = Vector2( 1438.15, -2776.79 )
+
+[node name="Spawn4" type="Node2D" parent="Spawns"]
+position = Vector2( -1704.39, -2769.16 )
+
+[node name="Spawn5" type="Node2D" parent="Spawns"]
+position = Vector2( -3004.02, -91.927 )
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 10 )
+autoplay = true
+
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
+script = SubResource( 2 )
+[connection signal="end_game" from="Player" to="HTTPRequest" method="_on_Player_end_game"]
+[connection signal="health_changed" from="Player" to="GUI/HUD" method="_on_Player_health_changed"]
+[connection signal="shield_changed" from="Player" to="GUI/HUD" method="_on_Player_shield_changed"]
+[connection signal="end_game" from="Station" to="HTTPRequest" method="_on_Station_end_game"]
+[connection signal="health_changed" from="Station" to="GUI/HUD" method="_on_Station_health_changed"]
+[connection signal="spawn_changed" from="Spawns" to="Player" method="_on_Spawns_spawn_changed"]
+[connection signal="wave_changed" from="Spawns" to="Player" method="_on_Spawns_wave_changed"]
+[connection signal="wave_changed" from="Spawns" to="GUI/HUD" method="_on_Spawns_wave_changed"]
+[connection signal="wave_changed" from="Spawns" to="Station" method="_on_Spawns_wave_changed"]
+[connection signal="request_completed" from="HTTPRequest" to="HTTPRequest" method="_on_HTTPRequest_request_completed"]

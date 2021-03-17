@@ -1,0 +1,26 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Nodes/Agents/Station.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Nodes/Squads/Squadron1.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Nodes/Agents/Player.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Nodes/Squads/FiveZero.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Assets/Sounds/Bit Space (loopable).ogg" type="AudioStream" id=5]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Station" parent="." instance=ExtResource( 1 )]
+position = Vector2( -1.32367, 13.585 )
+
+[node name="Player" parent="." instance=ExtResource( 3 )]
+position = Vector2( -0.320068, -1.18091 )
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 5 )
+autoplay = true
+
+[node name="Squad" parent="." instance=ExtResource( 2 )]
+position = Vector2( -1259.56, 5.81238 )
+
+[node name="Squad2" parent="." instance=ExtResource( 4 )]
+position = Vector2( 1514.17, 4.65894 )
+rotation = 3.14159

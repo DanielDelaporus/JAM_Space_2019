@@ -1,0 +1,153 @@
+[gd_scene load_steps=16 format=2]
+
+[ext_resource path="res://Assets/Sprites/Anim/tile000.png" type="Texture" id=1]
+[ext_resource path="res://Assets/Sprites/Anim/BlinkRed.tres" type="Animation" id=2]
+[ext_resource path="res://Death.tres" type="Animation" id=3]
+[ext_resource path="res://Assets/Sprites/Anim/tile005.png" type="Texture" id=4]
+[ext_resource path="res://Assets/Sprites/Anim/tile010.png" type="Texture" id=5]
+[ext_resource path="res://Assets/Sprites/Anim/tile006.png" type="Texture" id=6]
+[ext_resource path="res://Assets/Sprites/Anim/tile008.png" type="Texture" id=7]
+[ext_resource path="res://Assets/Sprites/Anim/tile001.png" type="Texture" id=8]
+[ext_resource path="res://Assets/Sprites/Anim/tile009.png" type="Texture" id=9]
+[ext_resource path="res://Assets/Sprites/Anim/tile002.png" type="Texture" id=10]
+[ext_resource path="res://Assets/Sprites/spaceStation_026.png" type="Texture" id=11]
+[ext_resource path="res://Assets/Sounds/explosion09.wav" type="AudioStream" id=12]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends StaticBody2D
+
+export (int) var  rot_speed = 1
+export (int) var  HP = 250
+var destroyed = false
+var nb_wave = 0
+
+signal health_changed(health)
+signal end_game(wave)
+
+func _ready():
+	pass
+
+func takedamage(nb):
+	HP -= nb
+	emit_signal(\"health_changed\", HP)
+	$AnimationPlayer.play(\"BlinkRed\")	
+	if not destroyed and HP <= 0:
+		destroyed = true
+		boom()
+
+func boom():
+	$CollisionPolygon2D.queue_free()
+	destroyed = true	
+	$AnimationPlayer.play(\"StationDeath\")
+	update()
+
+func destroy():
+	emit_signal(\"end_game\", nb_wave)
+	queue_free()
+	get_tree().change_scene(\"res://Nodes/Interface/Menu/game_over_menu.tscn\")
+
+func _process(delta):
+	rotate(0.001 * rot_speed)
+	
+func is_destroyed():
+	pass
+
+func _on_Area2D_body_entered(body):
+	if (body.has_method(\"getagro\")):
+		body.getagro(self)
+
+func _on_Area2D_body_exited(body):
+	pass
+
+
+func _on_Spawns_wave_changed(wave):
+	nb_wave = wave
+"
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 3831.72
+
+[sub_resource type="Animation" id=3]
+resource_name = "StationDeath"
+tracks/0/type = "method"
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 1 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "destroy"
+} ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:texture")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 ),
+"transitions": PoolRealArray( 1, 1, 2, 2.21914, 1, 1, 5.46416, 1.6245, 1.23114, 1 ),
+"update": 1,
+"values": [ ExtResource( 11 ), ExtResource( 1 ), ExtResource( 8 ), ExtResource( 10 ), ExtResource( 4 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 9 ), ExtResource( 5 ), null ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Sprite:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.2, 0.9, 1 ),
+"transitions": PoolRealArray( 13.4543, 1, 39.3967, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 10, 10 ), Vector2( 10, 10 ), Vector2( 1, 1 ) ]
+}
+tracks/3/type = "audio"
+tracks/3/path = NodePath("AudioStreamPlayer")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"clips": [ {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource( 12 )
+} ],
+"times": PoolRealArray( 0.1 )
+}
+
+[node name="Station" type="StaticBody2D"]
+rotation = 0.507891
+z_index = -1
+collision_layer = 64
+collision_mask = 32
+script = SubResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 11 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PoolVector2Array( -267.738, -156.446, -51.3943, -151.81, -34.5358, 389.46, 52.9152, 392.11, 71.4655, -148.496, 292.82, -146.259, 285.417, -246.192, 72.5968, -249.893, 71.4655, -418.799, -50.4359, -416.149, -53.0859, -254.497, -267.738, -246.547 )
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource( 2 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/BlinkRed = ExtResource( 2 )
+anims/Death = ExtResource( 3 )
+anims/StationDeath = SubResource( 3 )
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 12 )
+[connection signal="body_entered" from="Area2D" to="." method="_on_Area2D_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_Area2D_body_exited"]

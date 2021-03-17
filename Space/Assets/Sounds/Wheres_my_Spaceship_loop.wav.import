@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Wheres_my_Spaceship_loop.wav-0566e41e77ec821b6fe5c859467f296c.sample"
+
+[deps]
+
+source_file="res://Assets/Sounds/Wheres_my_Spaceship_loop.wav"
+dest_files=[ "res://.import/Wheres_my_Spaceship_loop.wav-0566e41e77ec821b6fe5c859467f296c.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

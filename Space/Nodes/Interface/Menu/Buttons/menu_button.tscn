@@ -1,0 +1,22 @@
+[gd_scene format=2]
+
+[node name="MenuButton" type="Button"]
+margin_right = 1040.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 500, 60 )
+flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_colors/font_color = Color( 0.913725, 0.913725, 0.913725, 1 )
+custom_colors/font_color_shadow = Color( 0.866667, 0.568627, 0.12549, 1 )
+custom_constants/shadow_offset_x = 3
+custom_constants/shadow_offset_y = 5
+text = "New Game"
+__meta__ = {
+"_edit_use_anchors_": false
+}

@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Assets/Sprites/Asteroids/spaceMeteors_004.png" type="Texture" id=1]
+
+[node name="StaticAsteroid" type="StaticBody2D"]
+collision_layer = 8
+collision_mask = 47
+
+[node name="Sprite" type="Sprite" parent="."]
+scale = Vector2( 3, 3 )
+texture = ExtResource( 1 )
+
+[node name="CollisionShape2D" type="CollisionPolygon2D" parent="."]
+polygon = PoolVector2Array( 5.00006, -649, -435, -569, -628, -234, -615, 187, -405, 565, 26.0001, 648, 414, 555, 602, 200, 626, -194, 385, -545 )

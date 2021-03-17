@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Nodes/Agents/ZERO.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Nodes/Agents/Enemies.tscn" type="PackedScene" id=2]
+
+[node name="Squad" type="Node2D"]
+
+[node name="ZERO" parent="." instance=ExtResource( 1 )]
+position = Vector2( 168.456, -402.162 )
+
+[node name="ZERO2" parent="." instance=ExtResource( 1 )]
+position = Vector2( 209.73, 471.389 )
+
+[node name="ZERO3" parent="." instance=ExtResource( 1 )]
+position = Vector2( 186.458, 25.2886 )
+
+[node name="Enemy2" parent="." instance=ExtResource( 2 )]
+position = Vector2( 176.981, -183.113 )
+
+[node name="Enemy" parent="." instance=ExtResource( 2 )]
+position = Vector2( 216.262, 253.662 )
